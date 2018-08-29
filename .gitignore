@@ -3,6 +3,8 @@ Output/*
 *.key
 *.csv
 .project
+!API_KEYS/Example.key
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
