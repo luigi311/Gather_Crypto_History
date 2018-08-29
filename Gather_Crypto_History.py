@@ -1,6 +1,6 @@
 from coinbase.wallet.client import Client as CoinBase
 from six import string_types
-import argparse, csv
+import argparse, csv, os
 
 
 parser = argparse.ArgumentParser(
@@ -13,6 +13,10 @@ args = parser.parse_args()
 
 
 coinbase_api_file = "API_KEYS/Coinbase.key"
+Output_folder = "Output/"
+if not os.path.exists(Output_folder):
+  os.makedirs(Output_folder)
+
 delta_struc = ["Date", "Type", "Exchange", "Base amount", "Base currency", "Quote amount", "Quote currency", "Fee",
                "Fee currency", "Costs/Proceeds", "Costs/Proceeds currency", "Sync Holdings", "Sent/Received from","Sent to", "Notes"]
 
@@ -28,7 +32,7 @@ def coinbase_csv(file):
 
   for account_id in range(len(accounts["data"])):
     print("Working on %s" % accounts["data"][account_id]["name"])
-    with open('coinbase-'+accounts["data"][account_id]["name"]+".csv", 'w', newline='') as csvfile:
+    with open(Output_folder+'coinbase-'+accounts["data"][account_id]["name"]+".csv", 'w', newline='') as csvfile:
       coinbasewriter = csv.writer(csvfile, delimiter=',',
                                 quotechar='"', quoting=csv.QUOTE_MINIMAL)
       coinbasewriter.writerow(delta_struc)
